@@ -18,6 +18,5 @@ from django.urls import path
 from app1 import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('movie/',views.movie_schedule,name='movie')
+    path('', views.movie_list, name='movie_list'),
 ]
