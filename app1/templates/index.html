@@ -1,0 +1,32 @@
+<h1>The Movies@Mariana Tek Schedule</h1>
+
+<form>
+  <label for="genre">Filter by Genre:</label>
+  <select id="genre" name="genre">
+    <option value="">All Genres</option>
+    {% for genre in genres %}
+      <option value="{{ genre }}" {% if selected_genre == genre %}selected{% endif %}>{{ genre }}</option>
+    {% endfor %}
+  </select>
+  <label for="search">Search by Title:</label>
+  <input type="text" id="search" name="search" value="{{ search_term }}">
+  <input type="submit" value="Filter">
+</form>
+
+<h2>Upcoming Movies</h2>
+{% for movie in movies %}
+  <div class="movie-card">
+    <h3>{{ movie.title }}({{ movie.year_release }})</h3>
+    <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster">
+    <p>Genre: {{ movie.genre }}</p>
+    {% if movie.rating %}
+      <p>Rating: {{ movie.rating }}</p>
+    {% endif %}
+    {% if movie.metacritic_rating %}
+      <p>Metacritic Rating: {{ movie.metacritic_rating }}</p>
+    {% endif %}
+    <p>Runtime: {{ movie.runtime }} minutes</p>
+  </div>
+{% empty %}
+  <p>No movies found.</p>
+{% endfor %}
