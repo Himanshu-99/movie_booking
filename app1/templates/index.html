@@ -2,13 +2,14 @@
 <html>
 <head>
     <title>The Movies@Mariana Tek</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#search_query").keyup(function() {
-                var search_term = $(this).val();
+                var search_term = $(this).val().toLowerCase();  // Make search case-insensitive
                 $(".movie").each(function() {
-                    var title = $(this).find(".movie-title").text();
+                    var title = $(this).find(".movie-title").text().toLowerCase();
                     if (title.indexOf(search_term) > -1) {
                         $(this).show();
                     } else {
@@ -29,7 +30,7 @@
             {% endfor %}
         </select>
         <input type="text" name="search_query" id="search_query" placeholder="Search by Title">
-        <button type="submit">Filter</button>
+        <button type="submit" class="search-button">Search</button>
     </form>
     <hr>
     {% for movie in movies %}
@@ -38,9 +39,12 @@
             <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="movie-poster">
             <p class="movie-genre">Genre(s): {{ movie.genre }}</p>
             <p class="movie-rating">Rating: {{ movie.rating }}</p>
-            <p class="movie-year">Year Released: {{ movie.year_release }}</p>
-            <p class="movie-metacritic">Metacritic Rating: {{ movie.metacritic_rating }}</p>
-            <p class="movie-runtime">Runtime: {{ movie.runtime }} minutes</p>
+            {% if movie.metacritic_rating != 'N/A' %}
+                <p class="movie-metacritic">Metacritic: {{ movie.metacritic_rating }}</p>
+            {% endif %}
+            <p class="movie-runtime">Runtime: {{ movie.year_release }} ({{ movie.runtime }})</p>
         </div>
-    {% endfor %} </body>
+    {% endfor %}
+
+</body>
 </html>
